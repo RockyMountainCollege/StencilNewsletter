@@ -24,6 +24,7 @@ class ApiReportBack extends CI_Controller {
                 if($value) {
                     switch ($value->event) {
                         case "open":
+                        case "delivered":
                         case "spamreport":
                         case "unsubscribe":
                             if (isset($value->category) && is_array($value->category)) {
@@ -71,7 +72,7 @@ class ApiReportBack extends CI_Controller {
                             break;
                         default:
                             // Unknown event log it
-                            logIt($result);
+                            $this->logIt($result);
                     }
                 }
             }
