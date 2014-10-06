@@ -145,7 +145,7 @@ class Contacts extends CI_Controller {
                     fclose($fh);
                 }
                 if($valid_list)
-                    $this->redirect('/contacts/success/'.$listName);
+                    redirect('/contacts/success/'.$listName);
                 else {
                     $this->render_views_with_error($data, $error);
                 }
