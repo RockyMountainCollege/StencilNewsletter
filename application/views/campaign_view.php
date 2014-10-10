@@ -9,8 +9,8 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Reporting for: <?= $id; ?></h3>
-            <p><a href='<?= site_url("/reports/export/".$id);?>'>Export data as CSV file</a><br>
-            <a href="<?= base_url('/emails/'.$id.'.html'); ?>">View Email</a></p>
+            <p><a class="btn btn-info" href='<?= site_url("/reports/export/".$id);?>'>Export data as CSV file</a>
+            <a class="btn btn-info" href="<?= base_url('/emails/'.$id.'.html'); ?>" target="_blank">View Email</a></p>
         </div>
         <div class="panel-body">
             <ul class="nav nav-tabs">
@@ -41,7 +41,7 @@
 <script type="text/javascript">
     function loadReport(reportID) {
         console.log('loading report: ' + reportID);
-        var report = reportID.replace("#",""); 
+        var report = reportID.replace("#","");
         var siteUrl = "<?= site_url('/reports'); ?>/";
         var campaign = "<?= $id ?>/";
         $(reportID).load(siteUrl + report + '/' + campaign);
