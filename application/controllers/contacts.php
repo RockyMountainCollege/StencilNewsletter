@@ -85,7 +85,7 @@ class Contacts extends CI_Controller {
         // Upload rules
         $config['upload_path'] = getcwd().'/uploads/';
         $config['allowed_types'] = 'csv|txt|text/csv';
-        $config['max_size'] = '100';
+        $config['max_size'] = '2000';
 
         $this->load->library('upload', $config);
 
