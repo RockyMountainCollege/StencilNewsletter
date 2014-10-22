@@ -9,10 +9,10 @@ class Compose extends CI_Controller {
      *
      * Maps to the following URL
      *         http://example.com/index.php/welcome
-     *    - or -  
+     *    - or -
      *         http://example.com/index.php/welcome/index
      *    - or -
-     * Since this controller is set as the default controller in 
+     * Since this controller is set as the default controller in
      * config/routes.php, it's displayed at http://example.com/
      *
      * So any other public methods not prefixed with an underscore will
@@ -47,10 +47,10 @@ class Compose extends CI_Controller {
             $this->load->view('header_view', $data);
             $this->load->view('compose_view', $data);
             $this->load->view('footer_view', $data);
-        } 
+        }
         else {
             // Gather the POST'ed variables
-            $lists      = $this->input->post('recipientList');
+            $list       = $this->input->post('recipientList');
             $from       = $this->input->post('from');
             $subject    = $this->input->post('subject');
             $emailBody  = $this->input->post('emailBody');
@@ -72,13 +72,10 @@ class Compose extends CI_Controller {
                 setText("Please view this email with your broswer at: ".base_url("/emails/$fn"));
 
             // Insert campaign data into table and build email address list
-            foreach ($lists as $list)
-            {
-                $campaignData = array('list_id'=>$list, 'campaign'=>$campaign, 'subject'=>$subject);
-                $this->Campaign_model->insert_campaign($campaignData);
-                foreach ($this->Contacts_model->get_emails($list) as $address)
-                    $mail->addTo($address->email);
-            }
+            $campaignData = array('list_id'=>$list, 'campaign'=>$campaign, 'subject'=>$subject);
+            $this->Campaign_model->insert_campaign($campaignData);
+            foreach ($this->Contacts_model->get_emails($list) as $address)
+                $mail->addTo($address->email);
 
             //Process e-mail body see if subsitutions are needed
             $body = $mail->setHtml($emailBody);

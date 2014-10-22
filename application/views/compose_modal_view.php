@@ -7,8 +7,8 @@
             <h4 class="modal-title">Select Recipients</h4>
             </div>
             <div class="modal-body">
-                <p>Select the lists that you want the email to go to. Hold down ctrl for mutiple selections.</p>
-                <select name="recipientList[]" multiple class="form-control" value="<?=set_value('recipientList[]');?>">
+                <p>Select the list that you want the email to go to.</p>
+                <select name="recipientList" class="form-control" value="<?=set_value('recipientList');?>">
                     <?php foreach ($records as $row): ?>
                     <option><?=$row->list_name;?></option>
                     <?php endforeach; ?>
