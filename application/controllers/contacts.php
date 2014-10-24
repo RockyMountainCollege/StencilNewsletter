@@ -20,8 +20,8 @@ class Contacts extends CI_Controller {
         return array_combine($a, $b);
     }
 
-    function render_views_with_error($data, $error){
-        $error = array('error' => $error);        
+    function render_views_with_error($data, $error='An unknown error occured.'){
+        $error = array('error' => $error);
         // Render views
         $this->load->view('header_view', $data);
         $this->load->view('contacts_view', $error);
@@ -52,7 +52,7 @@ class Contacts extends CI_Controller {
             $this->load->view('contacts_view', $data);
             $this->load->view('contacts_upload_view');
             $this->load->view('footer_view', $data);
-        } 
+        }
         else {
             // Gather the POST'ed variables
             $listName = preg_replace('/[^A-Za-z0-9_]/', '', $this->input->post('listName'));
@@ -96,10 +96,10 @@ class Contacts extends CI_Controller {
             $data['lists'] = $data['lists'] + array($list->list_name=>$this->Contacts_model->count_members($list->list_name));
 
         if (!$this->upload->do_upload()){
-            $error = array('error' => $this->upload->display_errors());
-            
+            $error = $this->upload->display_errors();
+
             $this->render_views_with_error($data, $error);
-        } 
+        }
         else {
             // Success
             $upload_data = $this->upload->data();
@@ -131,12 +131,12 @@ class Contacts extends CI_Controller {
                             }
 
                             if(!in_array(strtolower("email"), array_map('strtolower', $fields)))
-                                $error = array('error'=>"CSV files must contain email field.");
+                                $error = "CSV files must contain email field.";
                             else {
                                 $valid_list = true;
                                 $this->Contacts_model->create_list($listName, $header);
                             }
-                        } 
+                        }
                         else {
                             if($valid_list)
                                 $this->Contacts_model->add_member($listName, $this->_combine($fields, $csv));
@@ -151,18 +151,12 @@ class Contacts extends CI_Controller {
                 }
             }
             else{
-                // $error = "List names must be unique.";
-                // // Render views
-                // $this->load->view('header_view', $data);
-                // $this->load->view('contacts_view', $error);
-                // $this->load->view('contacts_upload_view');
-                // $this->load->view('footer_view');
                 $this->render_views_with_error($data, 'List names must be unique.');
             }
         }
     }
 
-  
+
     function edit($listName='none')
     {
         if($listName == 'none')
