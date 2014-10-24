@@ -7,7 +7,7 @@ class Campaign_model extends CI_Model {
         // Call the Model constructor
         parent::__construct();
     }
-    
+
     function get_campaigns()
     {
         $this->db->select('campaign');
@@ -25,6 +25,10 @@ class Campaign_model extends CI_Model {
     function insert_campaign($data)
     {
         $this->db->insert('campaigns', $data);
+    }
+
+    function create_campaign_event_table($data){
+      $this->load->dbforge();
     }
 
     function delete_campaign($campaign)
