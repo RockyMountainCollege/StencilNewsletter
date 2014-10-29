@@ -85,7 +85,7 @@ class Compose extends CI_Controller {
                 // Subsitutions are needed
                 $subs = array_combine($matches[0], $matches[1]);
                 foreach($subs as $key => $val)
-                    $body->addSubstitution($key, $this->Contacts_model->get_subs($lists[0], $val));
+                    $body->addSubstitution($key, $this->Contacts_model->get_subs($list, $val));
             }
 
             //Send the email(s)
