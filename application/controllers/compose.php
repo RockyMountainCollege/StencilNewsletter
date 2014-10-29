@@ -38,7 +38,7 @@ class Compose extends CI_Controller {
         $this->form_validation->set_rules('from', 'Send From', 'valid_email');
 
         // Javascript libraries to load
-        $data['js'] = array('ckeditor/ckeditor.js');
+        $data['js'] = array('ckeditor/ckeditor.js', 'compose.js');
         $data['records'] = $this->Contacts_model->get_lists();
         $data['active'] = 'compose';
 
