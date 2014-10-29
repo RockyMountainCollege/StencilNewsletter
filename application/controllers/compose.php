@@ -71,6 +71,7 @@ class Compose extends CI_Controller {
                 setSubject($subject)->
                 setText("Please view this email with your broswer at: ".base_url("/emails/$fn"));
 
+
             // Insert campaign data into table and build email address list
             $campaignData = array('list_id'=>$list, 'campaign'=>$campaign, 'subject'=>$subject);
             $this->Campaign_model->insert_campaign($campaignData);
