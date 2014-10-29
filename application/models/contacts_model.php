@@ -90,14 +90,12 @@ class Contacts_model extends CI_Model {
 
     function get_subs($listName, $col)
     {
-        if($this->db->field_exists($col, $listName)){
-            $arr = array();
-            $this->db->select($col);
-            $query = $this->db->get($listName);
-            foreach ($query->result() as $row)
-                array_push($arr, $row->$col);
-            return $arr;
-        }
+        $arr = array();
+        $this->db->select($col);
+        $query = $this->db->get($listName);
+        foreach ($query->result() as $row)
+            array_push($arr, $row->$col);
+        return $arr;
     }
 
     function count_members($tableName)
