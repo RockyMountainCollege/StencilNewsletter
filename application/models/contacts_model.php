@@ -7,7 +7,7 @@ class Contacts_model extends CI_Model {
         // Call the Model constructor
         parent::__construct();
     }
-    
+
     function create_list($listName, $data)
     {
         // Helpers
@@ -48,7 +48,7 @@ class Contacts_model extends CI_Model {
         return array_map(
             function($list){
                 return $list->list_name;
-            }, 
+            },
             $this->get_lists()
         );
     }
@@ -90,12 +90,14 @@ class Contacts_model extends CI_Model {
 
     function get_subs($listName, $col)
     {
-        $arr = array();
-        $this->db->select($col);
-        $query = $this->db->get($listName);
-        foreach ($query->result() as $row)
-            array_push($arr, $row->$col);
-        return $arr;
+        if($this->db->field_exists($col, $listname)){
+            $arr = array();
+            $this->db->select($col);
+            $query = $this->db->get($listName);
+            foreach ($query->result() as $row)
+                array_push($arr, $row->$col);
+            return $arr;
+        }
     }
 
     function count_members($tableName)
