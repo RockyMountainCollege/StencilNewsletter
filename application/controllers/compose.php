@@ -73,8 +73,10 @@ class Compose extends CI_Controller {
 
 
             // Insert campaign data into table and build email address list
-            $campaignData = array('list_id'=>$list, 'campaign'=>$campaign, 'subject'=>$subject);
+            $campaignData = array('list_id'=>$list, 'campaign'=>$campaign, 'subject'=>$subject, 'event_table'=>$campaign.'_events');
             $this->Campaign_model->insert_campaign($campaignData);
+            $this->Campaign_model->create_campaign_event_table($campaignData);
+            
             foreach ($this->Contacts_model->get_emails($list) as $address)
                 $mail->addTo($address->email);
 
