@@ -67,6 +67,8 @@ class Campaign_model extends CI_Model {
 
       $this->load->dbforge();
       $this->dbforge->add_field($contact_fields + $event_fields);
+      $this->dbforge->add_key('email', true);
+      $this->dbforge->add_key('event', true);
       $this->dbforge->create_table($data['event_table']);
 
       $query = $this->db->get($data['list_id']);
