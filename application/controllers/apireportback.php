@@ -36,7 +36,12 @@ class ApiReportBack extends CI_Controller {
                                         'category'  =>  $category
                                     );
 
-                                    $this->db->insert('log', $insert_values);
+                                    if(!$this->db->table_exists($category."_events")){
+                                        $this->load->model('Campaign_model');
+                                        $this->Campaign_model->migrate_to_separate_event_table($category);
+                                    }
+
+                                    $this->db->insert($category."_events", $insert_values);
                                 }
                             }
                             break;
@@ -51,7 +56,12 @@ class ApiReportBack extends CI_Controller {
                                         'category'  =>  $category
                                     );
 
-                                    $this->db->insert('log', $insert_values);
+                                    if(!$this->db->table_exists($category."_events")){
+                                        $this->load->model('Campaign_model');
+                                        $this->Campaign_model->migrate_to_separate_event_table($category);
+                                    }
+
+                                    $this->db->insert($category."_events", $insert_values);
                                 }
                             }
                             break;
@@ -67,6 +77,13 @@ class ApiReportBack extends CI_Controller {
                                         'type'      =>  $value->type,
                                         'category'  =>  $category
                                     );
+
+                                    if(!$this->db->table_exists($category."_events")){
+                                        $this->load->model('Campaign_model');
+                                        $this->Campaign_model->migrate_to_separate_event_table($category);
+                                    }
+
+                                    $this->db->insert($category."_events", $insert_values);
                                 }
                             }
                             break;

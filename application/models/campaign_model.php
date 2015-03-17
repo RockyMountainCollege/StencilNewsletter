@@ -28,10 +28,29 @@ class Campaign_model extends CI_Model {
     }
 
     /*
-    $data consists of an array containing:
-      list_id => the name of the contact list (and that list's table)
-      campaign_id => the name of the campaign
-      event_table => the name of the event table for this campaign
+      Migrate campaign from using `log` table to campaign specific table.
+      Run when a SendGrid event is processed for a campaign that doesn't
+        have an exisiting event table.
+      $campaign_name is the name provided from the `category` field of
+        the SendGrid event.
+    */
+    function migrate_to_separate_event_table($campaign_name){
+      $event_table = $campaign_name."_events";
+
+      $this->db->select('list_id');
+      $res = $this->db->get_where('campaigns', array('campaign'=>$campaign_name));
+      $row = $res->row();
+      $list_id = $row->list_id;
+
+      $this->create_campaign_event_table(array('list_id' => $list_id, 'campaign_id' => $campaign_name, 'event_table' => $event_table));
+    }
+
+    /*
+      Create a campaign-specific event table.
+      $data consists of an array containing:
+        list_id => the name of the contact list (and that list's table)
+        campaign_id => the name of the campaign
+        event_table => the name of the event table for this campaign
     */
     function create_campaign_event_table($data){
       $event_fields = array(
@@ -71,10 +90,10 @@ class Campaign_model extends CI_Model {
       $this->dbforge->add_key('event', true);
       $this->dbforge->create_table($data['event_table']);
 
-      $query = $this->db->get($data['list_id']);
-      $res_array = $query->result_array();
+      //$query = $this->db->get($data['list_id']);
+      //$res_array = $query->result_array();
 
-      $this->db->insert_batch($data['event_table'], $res_array);
+      //$this->db->insert_batch($data['event_table'], $res_array);
     }
 
     function delete_campaign($campaign)
