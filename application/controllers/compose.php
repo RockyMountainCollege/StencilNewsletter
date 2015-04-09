@@ -67,7 +67,7 @@ class Compose extends CI_Controller {
             //Build Email
             $mail->
                 addCategory($campaign)->
-                setFrom(is_null($from) ? $this->config->item('default_send_from') : $from)->
+                setFrom(empty($from) ? $this->config->item('default_send_from') : $from)->
                 setSubject($subject)->
                 setText("Please view this email with your broswer at: ".base_url("/emails/$fn"));
 
